@@ -1,6 +1,6 @@
-# WebGL Weekly 5
+# WebGL Weekly 6
 
-A small Three.js lighting scene featuring a ground plane, two rotating cubes, a sphere, and a pyramid. The scene uses ambient and directional lighting and can be explored with orbit controls.
+A Three.js living-room scene with an open-front room, upholstered chair, television and console, side table, reading lamp, and two framed windows overlooking a daytime landscape. Orbit around the room to inspect the layout and lighting.
 
 ## Run locally
 
@@ -12,7 +12,7 @@ From the project directory, run:
 python3 -m http.server 8000
 ```
 
-Then open [http://localhost:8000/weekly5.html](http://localhost:8000/weekly5.html) in a browser.
+Then open [http://localhost:8000/weekly6.html](http://localhost:8000/weekly6.html) in a browser.
 
 You can also use the Live Server extension in VS Code.
 
@@ -20,12 +20,12 @@ You can also use the Live Server extension in VS Code.
 
 - Drag to orbit around the scene.
 - Scroll to zoom.
-- Resize the browser window to update the camera and renderer.
+- Resize the browser window to update the camera and renderer. The scene also adapts to smaller screens.
 
 ## Project files
 
-- [`weekly5.html`](weekly5.html) loads the scene and defines the import map for Three.js.
-- [`weekly5.js`](weekly5.js) creates the scene, camera, renderer, objects, lights, controls, and animation loop.
+- [`weekly6.html`](weekly6.html) loads the scene and defines the import map for Three.js.
+- [`weekly6.js`](weekly6.js) creates the room, furniture, exterior view, lighting, controls, and render loop.
 
 ## Technologies
 
