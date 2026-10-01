@@ -80,13 +80,13 @@ box("back wall window header", [6.15, 2.2, 0.24], [-1.5, 6.9, -5], materials.wal
 box("back wall window sill", [6.15, 1.05, 0.24], [-1.5, 0.525, -5], materials.wall);
 
 // A soft blue daytime landscape sits beyond the openings in the rear wall.
-const sky = new THREE.MeshBasicMaterial({ color: 0x83c8d7 });
-const distantHill = new THREE.MeshBasicMaterial({ color: 0x8ea98a });
+const sky = new THREE.MeshBasicMaterial({ color: 0x102020 });
+const distantHill = new THREE.MeshBasicMaterial({ color: 0x224427 });
 const nearHill = new THREE.MeshBasicMaterial({ color: 0x597d5b });
 box("outside sky", [14, 12, 0.12], [0, 5, -5.8], sky, false);
 box("distant landscape", [14, 2.3, 0.18], [0, 1.65, -5.65], distantHill, false);
 box("meadow", [14, 1.2, 0.18], [0, 0.15, -5.6], nearHill, false);
-sphere("sun", 0.55, [-4.25, 5.35, -5.5], new THREE.MeshBasicMaterial({ color: 0xffd47d }));
+sphere("sun", 0.55, [-4.25, 5.35, -5.5], new THREE.MeshBasicMaterial({ color: 0xffd4dd }));
 
 for (const x of [-3.25, 0.2]) {
     box("window glass", [2.2, 4.55, 0.08], [x, 3.425, -4.78], materials.glass, false);
@@ -115,7 +115,7 @@ for (const x of [2.1, 3.55]) {
     box("console handle", [0.22, 0.045, 0.07], [x, 0.49, -3.825], materials.metal);
 }
 box("television frame", [3.5, 2.15, 0.16], [2.95, 2.42, -4.43], materials.metal);
-const screenMaterial = new THREE.MeshBasicMaterial({ color: 0x172a33 });
+const screenMaterial = new THREE.MeshBasicMaterial({ color: 0x801080 });
 box("television screen", [3.28, 1.92, 0.025], [2.95, 2.43, -4.335], screenMaterial, false);
 box("tv stand neck", [0.16, 0.35, 0.16], [2.95, 1.32, -4.34], materials.metal);
 box("tv stand foot", [0.9, 0.08, 0.38], [2.95, 1.13, -4.32], materials.metal);
@@ -159,6 +159,7 @@ scene.add(lampShade);
 box("lamp stem", [0.09, 0.8, 0.09], [1.5, 1.68, 1.15], materials.metal);
 
 const ambientLight = new THREE.HemisphereLight(0xe2f1ff, 0x75614c, 1.45);
+ambientLight.intensity = 0;
 scene.add(ambientLight);
 
 const sunlight = new THREE.DirectionalLight(0xffe2b6, 3.1);
@@ -169,21 +170,105 @@ sunlight.shadow.camera.left = -10;
 sunlight.shadow.camera.right = 10;
 sunlight.shadow.camera.top = 12;
 sunlight.shadow.camera.bottom = -4;
+sunlight.intensity = 0.00;
 scene.add(sunlight);
 
 const lampGlow = new THREE.PointLight(0xffc56f, 28, 5);
 lampGlow.position.set(1.5, 2.1, 1.15);
+lampGlow.intensity = 1;
+lampGlow.color.set(0xee0000);
 scene.add(lampGlow);
+
+const tvLight =
+new THREE.PointLight(
+    0x88aaff,
+    10,
+    8
+);
+tvLight.position.set(2.95, 2, -3.5);
+tvLight.intensity = 30;
+tvLight.color.set(0x801080);
+scene.add(tvLight);
+
+const roomLight =
+new THREE.PointLight(
+    0xffffff,
+    0,
+    30
+);
+roomLight.position.set(-5, 8, -4);
+roomLight.intensity = 10;
+roomLight.color.set(0xee0000);
+scene.add(roomLight);
+
+const roomLight2 =
+new THREE.PointLight(
+    0xffffff,
+    0,
+    30
+);
+roomLight2.position.set(4.5, 8, -4);
+roomLight2.intensity = 10;
+roomLight2.color.set(0xee0000);
+scene.add(roomLight2);
+
+
+const roomLight3 =
+new THREE.PointLight(
+    0xffffff,
+    0,
+    30
+);
+roomLight3.position.set(-5, 8, 4);
+roomLight3.intensity = 10;
+roomLight3.color.set(0xee0000);
+scene.add(roomLight3);
+
+const roomLight4 =
+new THREE.PointLight(
+    0xffffff,
+    0,
+    30
+);
+roomLight4.position.set(5, 8, 4);
+roomLight4.intensity = 10;
+roomLight4.color.set(0xee0000);
+scene.add(roomLight4);
 
 window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
-
+let loopy = 0;
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
+    tvLight.intensity =
+    Math.random() > 0.2
+    ? 40
+    : 20;
+
+    roomLight.intensity = 10;     
+    roomLight2.intensity = 10;     
+    roomLight3.intensity = 10;     
+    roomLight4.intensity = 10;     
+    loopy = (loopy + 1) % 40;
+    switch (Math.floor(loopy/10)){
+        case 0:
+            roomLight.intensity = 0;     
+            break;
+        case 1:
+            roomLight2.intensity = 0;     
+            break;
+        case 2:
+            roomLight4.intensity = 0;     
+            break;
+        case 3:
+            roomLight3.intensity = 0;     
+            break;
+    }
+
     renderer.render(scene, camera);
 }
 
